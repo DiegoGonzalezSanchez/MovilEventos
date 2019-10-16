@@ -1,0 +1,16 @@
+{
+    "short_name": "movileventos-a1ce2",
+    "name": "Ejemplo de PWA",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#4fc3f7",
+    "theme_color": "#ffcb2d",
+    "icons": [
+      {
+        "src": "img/firebase.png",
+        "sizes": "1024x1024",
+        "type": "image/png"
+      }
+    ]
+   }
+   

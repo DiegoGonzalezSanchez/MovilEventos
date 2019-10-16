@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="utf-8">
+   <title>Ejemplo de PWA</title>
+
+   <!-- Ícono para la página web. -->
+   <link rel="icon" sizes="32x32" href="favicon.ico">
+
+   <!-- Color de la barra de navegación de Chrome. -->
+   <meta name="theme-color" content="#ffcb2d">
+
+   <!-- Configuración de la Web App Chrome y Microsoft Store. -->
+   <link rel="manifest" href="manifest.json">
+
+   <!-- Configuración para del acceso directo en Windows Edge/IE -->
+   <!-- Icono -->
+   <meta name="msapplication-TileImage" content="img/firebase.png">
+   <!-- Color de tile. -->
+   <meta name="msapplication-TileColor" content="#4fc3f7">
+
+   <!-- Configuración para Web Clip en Safari. -->
+   <meta name="mobile-web-app-capable" content="yes">
+   <link rel="apple-touch-icon" sizes="1024x1024" href="img/firebase.png">
+   <link rel="apple-touch-startup-image" sizes="1024x1024"
+     href="img/firebase.png">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="css/estilos.css">
+
+   <!-- update the version number as needed -->
+   <script defer src="/__/firebase/6.0.2/firebase-app.js"></script>
+   <!-- include only the Firebase features as you need -->
+   <script defer src="/__/firebase/6.0.2/firebase-auth.js"></script>
+   <script defer src="/__/firebase/6.0.2/firebase-firestore.js"></script>
+   <script defer src="/__/firebase/6.0.2/firebase-messaging.js"></script>
+   <script defer src="/__/firebase/6.0.2/firebase-storage.js"></script>
+   <!-- initialize the SDK after all desired features are loaded -->
+   <script defer src="/__/firebase/init.js"></script>
+
+   <style>
+
+      body{
+       background: linear-gradient(to right, rgba(113,206,239,1) 8%, rgba(33,180,226,1) 13%, rgba(38,181,226,1) 16%,
+      rgba(183,222,237,1) 100%);
+      }
+      footer{
+     background: linear-gradient(to right, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%);
+     width:100%;
+     height: 50px;
+     bottom:0;
+     position:fixed;
+     text-align: center;
+   }
+    </style>
+ 
+
+ </head>
+ <body>
+  <h1>  ***  Multiplicación   ***</h1>
+  <form name="vista">
+    <p>
+      <input type="number" style=" height:30px" name="numero1" required placeholder="Número 1"
+        accesskey="1">
+    </p>
+    <p> X </p>
+    <p>
+      <input type="number" style=" height:30px" name="numero2" required placeholder="Número 2"
+        accesskey="2">
+    </p>
+    <p>
+      <output name="respuesta"></output>
+    </p>
+    <p>
+      <button type="submit"  style="width: 100px; height:45px">Enviar</button>
+    </p>
+   </form>
+   <script>
+     "use strict";
+     document.vista.addEventListener("submit", saluda);
+     function saluda(evt) {
+       evt.preventDefault();
+       const numero1 = document.vista.numero1.value.trim();
+       const numero2 = document.vista.numero2.value.trim();
+       var resultado = numero1 * numero2;
+       document.vista.respuesta.value = `El resultado es : ${resultado}`;
+     }
+  
+      /* Registra un service worker para instalar la aplicación en el
+       * caché del navegador. */
+      async function registraServiceWorker() {
+        if ("serviceWorker" in navigator) {
+          try {
+            const registro = await navigator.serviceWorker.register("sw.js");
+            console.log("Service Worker registrado.");
+            console.log(registro);
+          } catch (e) {
+            muestraError(e);
+          }
+        }
+      }
+ 
+      registraServiceWorker();
+      document.addEventListener('DOMContentLoaded', function () {
+        try {
+          let app = firebase.app();
+          let features = ['auth', 'database', 'messaging', 'storage']
+            .filter(feature => typeof app[feature] === 'function');
+          document.vista.mensaje.value =
+            `Firebase SDK cargó con: ${features.join(', ')}`;
+        } catch (e) {
+          console.log(e);
+          document.vista.mensaje.value =
+            'Error cargando Firebase SDK. Revisa la consola del navegador.';
+        }
+      });
+    </script>
+  </body>
+  <footer>Copyright &copy; Derechos Reservados 2019 Diego González Sánchez  GRUPO IC 51.</footer>
+ </html>
+ 
